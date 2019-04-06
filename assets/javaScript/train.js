@@ -23,10 +23,10 @@ $( document).ready(function() {
     // Variable to reference the database.
     var database = firebase.database();
 
-    //on.value  on firebase to check for information 
-    //capture information from user input
-    //send the information to firebase
-    //add and append the info on html
+    // 1) on.value  on firebase to check for information 
+    // 2) capture information from user input
+    // 3) send the information to firebase
+    // 4) add and append the info on html
 
     //initial values
     var trainInfo = {
@@ -40,24 +40,43 @@ $( document).ready(function() {
   //should I set frequency on an array, or set as 0?
     // var frequency = 0;
 
-
+    // step 1
     database.ref().on("value", function(snapchot){
-        if  (snapshot.child("trainName").exists() && snapshot.child("destination").exists() && snapshot.child("trainTime").exists() && snapshot.child("frequency").exists()){
-            trainName = snapshot.val().trainName;
-            destination = snapshot.val().destination;
-            trainTime = snapshot.val().trainTime;
-            frequency = snapshot.val().frequency;
+        if  (snapshot.child("trainInfo.trainName").exists() && snapshot.child("trainInfo.destination").exists() && snapshot.child("trainInfo.trainTime").exists() && snapshot.child("trainInfo.frequency").exists()){
+            trainInfo.trainName = snapshot.val().trainName;
+            trainInfo.destination = snapshot.val().destination;
+            trainInfo.trainTime = snapshot.val().trainTime;
+            trainInfo.frequency = snapshot.val().frequency;
         } 
         else{
-            console.log("trainName "+ trainName);
-            console.log("Destination "+ destination);
-            console.log("trainTime "+ trainTime);
-            console.log("Frequency "+ frequency);
-
+            console.log("trainName "+ trainInfo.trainName);
+            console.log("Destination "+ trainInfo.destination);
+            console.log("trainTime "+ trainInfo.trainTime);
+            console.log("Frequency "+ trainInfo.frequency);
         }
 
 
+        // step 2
+        $(".btn-submit").on("click", function(event){
+            event.preventDefault();
+             
+            var name = $("#name").val().trim();
+            var dest = $("#dest").val().trim();
+            var time = $("#time").val().trim();
+            var freq = $("#freq").val().trim();
 
+            console.log(name);
+            console.log(dest);
+            console.log(time);
+            console.log(freq);
+
+            database.ref().set({
+                trainInfo.trainName : name,
+                highPrice: bidderPrice
+              });
+
+        })
+        
 
 
 
