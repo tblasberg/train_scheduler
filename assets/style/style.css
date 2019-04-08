@@ -1,11 +1,29 @@
 .jumbotron{
     width: 100%;
+    background-color: darkslategrey;
+    color: bisque;
 }
 
 .display-4{
     text-align: center;
-}
+    font-family: 'Shadows Into Light', cursive;}
 
 form{
     width: 100%;
+}
+
+.form-group{
+    font-family: 'Lobster', cursive;}
+
+.table-header{
+    font-family: 'Indie Flower', cursive;
+}
+
+body{
+    background-color: whitesmoke;
+
+}
+
+.btn-submit{
+    border-color: black;
 }

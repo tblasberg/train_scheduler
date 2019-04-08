@@ -11,15 +11,20 @@
     <!-- CSS -->
     <link rel="stylesheet" href="./assets/style/style.css">
 
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Dokdo|Lobster|Shadows+Into+Light" rel="stylesheet">
+
     <!-- JQUERY -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- JS -->
-    <script src="./assets/javaScript/train.js"></script>
-
+    
     <!-- FIREBASE REFERENCE -->
     <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>
-
     
+    <!-- MOMENT JS -->
+    <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+    
+    <!-- JS -->
+    <script src="./assets/javaScript/train.js"></script>
 
     <title>Catch me if you (train) can!</title>
 </head>
@@ -44,32 +49,15 @@
                 <table class="table table-striped">
                         <thead>
                           <tr>
-                            <th scope="col" class="train-Name">Train Name</th>
-                            <th scope="col" class="destination">Destination</th>
-                            <th scope="col">Frequency (min)</th>
-                            <th scope="col">Next Arrival</th>
-                            <th scope="col">Minutes Away</th>
+                            <th scope="col" class="train-Name table-header">Train Name</th>
+                            <th scope="col" class="destination table-header">Destination</th>
+                            <th scope="col" class="table-header">Frequency (min)</th>
+                            <th scope="col" class="table-header">Next Arrival</th>
+                            <th scope="col" class="table-header">Minutes Away</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                          </tr>
+                        <tbody id="trainTable">
+                          
                         </tbody>
                       </table>
 
@@ -81,7 +69,7 @@
         <br>
         <div class="row">
 
-                <form>
+                <form id="form"> 
                         <div class="form-group">
                           <label for="exampleInputEmail1">Train Name</label>
                           <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter the name of the train">
@@ -94,7 +82,7 @@
 
                         <div class="form-group">
                         <label>Train Time</label>
-                        <input type="text" class="form-control" id="time" aria-describedby="emailHelp" placeholder="First train time">
+                        <input type="text" class="form-control" id="time" aria-describedby="emailHelp" placeholder="What time will the train pass?">
                         </div>
 
                         <div class="form-group">
@@ -103,7 +91,7 @@
                         </div>
 
             
-                        <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+                        <button type="submit" class="btn btn-light btn-submit">Submit</button>
                       </form>
 
 
@@ -114,3 +102,5 @@
     
 </body>
 </html>
+
+

@@ -29,52 +29,68 @@ $( document).ready(function() {
     // 4) add and append the info on html
 
     //initial values
-    var trainInfo = {
-        trainName : [],
-        destination : [],
-        trainTime : [],
-        frequency : []
-    }
-
-  //how should I set var trainTime? As integer or string?
-  //should I set frequency on an array, or set as 0?
+    
+    //how should I set var trainTime? As integer or string?
+    //should I set frequency on an array, or set as 0?
     // var frequency = 0;
-
+    
     // step 1
-    database.ref().on("value", function(snapchot){
-        if  (snapshot.child("trainInfo.trainName").exists() && snapshot.child("trainInfo.destination").exists() && snapshot.child("trainInfo.trainTime").exists() && snapshot.child("trainInfo.frequency").exists()){
-            trainInfo.trainName = snapshot.val().trainName;
-            trainInfo.destination = snapshot.val().destination;
-            trainInfo.trainTime = snapshot.val().trainTime;
-            trainInfo.frequency = snapshot.val().frequency;
-        } 
-        else{
-            console.log("trainName "+ trainInfo.trainName);
-            console.log("Destination "+ trainInfo.destination);
-            console.log("trainTime "+ trainInfo.trainTime);
-            console.log("Frequency "+ trainInfo.frequency);
-        }
+    database.ref().on("child_added", function(snapshot){
+
+// DO THE MATH
+        var train = snapshot.val();
+        var now = moment(); 
+        var firstTrain = moment(train.trainTime, "HH:mm").subtract(1, "days");
+        var firstTrainDiff = now.diff(firstTrain, "minutes");
+        console.log(firstTrainDiff);
+        var remainder = firstTrainDiff % train.frequency;
+        console.log(remainder);
+        //how long until next train ( frequency minus the remainder)
+        var untilNextTrain = train.frequency - remainder;
+        console.log(untilNextTrain);
+        var nextArrival = now.add(untilNextTrain, "minutes").format("HH:mm");
+        console.log("Next arrival "+ nextArrival);
 
 
+        var newRow = $("<tr>");
+        $("<td>").text(train.trainName).appendTo(newRow);
+        $("<td>").text(train.destination).appendTo(newRow);
+        $("<td>").text(train.frequency).appendTo(newRow);
+        $("<td>").text(nextArrival).appendTo(newRow);
+        $("<td>").text(untilNextTrain).appendTo(newRow);
+
+
+        $("#trainTable").append(newRow);
+
+
+
+    })
+        
+        
         // step 2
         $(".btn-submit").on("click", function(event){
             event.preventDefault();
-             
+            
             var name = $("#name").val().trim();
             var dest = $("#dest").val().trim();
             var time = $("#time").val().trim();
             var freq = $("#freq").val().trim();
-
+            
             console.log(name);
             console.log(dest);
             console.log(time);
             console.log(freq);
-
-            database.ref().set({
-                trainInfo.trainName : name,
-                highPrice: bidderPrice
-              });
-
+            
+            var trainInfo = {
+                trainName : name,
+                destination : dest,
+                trainTime : time,
+                frequency : freq
+            }
+            
+            
+            database.ref().push(trainInfo);
+            $("#form").reset();
         })
         
 
@@ -88,7 +104,7 @@ $( document).ready(function() {
 
 
 
-    })
+    
 
 
 
